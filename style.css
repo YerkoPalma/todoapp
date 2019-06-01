@@ -1,0 +1,135 @@
+form {
+  display: flex;
+  align-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.new-todo {
+  border-radius: 100%;
+  outline: none;
+  border: none;
+  padding: 1rem;
+  font-size: 1.25rem;
+  line-height: .75rem;
+  background-color: #C8F1A4;
+  color: #ABABAB;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.new-todo:hover {
+  background-color: #6EDF28;
+  color: #5C5C5C;
+}
+
+.todo-name {
+  border-style: dashed;
+  border-color: #ABABAB;
+  padding: .5rem;
+  font-size: 1.25rem;
+  line-height: .75rem;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  padding: .5rem;
+  border-top: solid 1px #EBEBEB;
+  border-bottom: solid 1px #EBEBEB;
+  width: 370px;
+  margin: 0 auto;
+  align-content: space-around;
+  position: relative;
+}
+
+.todo-item > input { display: none; }
+.todo-item > form { display: none; margin: 0; }
+
+.todo-item input[type="text"] {
+  border: none;
+  font-family: Helvetica;
+  margin-left: 1rem;
+  font-size: 1rem;
+}
+.todo-item > label {
+  display: table-cell;
+  vertical-align: middle;
+  border: solid 2px #98E85A;
+  border-radius: 3px;
+  display: inline-block;
+  height: 15px;
+  width: 15px;  
+}
+
+.todo-item > input:checked + label::after {
+  content: '\2022 ';
+  position: relative;
+  top: -.7rem;
+  left: .125rem;
+  font-size: 2rem;
+}
+
+.todo-item > input:checked ~ span {
+  text-decoration: line-through solid;
+  color: #ABABAB;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: flex;
+}
+
+.todo-item > span {
+  display: table-cell;
+  padding-left: 1rem;
+  font-family: Helvetica;
+}
+.todo-panels {
+  text-align: center;
+  font-family: Helvetica;
+  padding: .5rem;
+  width: 370px;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 1rem;
+}
+.todo-panels > a {
+  text-decoration: none;
+  color: #ABABAB;
+  font-weight: bold;
+  padding-right: 1rem;
+}
+.todo-panels > a.active {
+  color: #5C5C5C;
+}
+.todo-panels > a:not(:first-child) {
+  padding-left: 1rem;
+  border-left: solid 2px #98E85A;
+}
+.cta {
+  align-self: center;
+  position: absolute;
+  display: none;
+  color: #5C5C5C;
+}
+.cta:hover {
+  color: #2F2F2F;
+}
+.todo-item:hover > .cta {
+  display: block;
+}
+.edit {
+  right: 2rem;
+}
+.remove {
+  right: 0;
+}
