@@ -3,6 +3,8 @@
 
 > menubar todo app
 
+![demo-dsh](https://user-images.githubusercontent.com/5105812/58754430-b0a75900-849d-11e9-885a-efe42f4e8213.gif)
+
 There are tons of Todo Apps out there, but:
 
 - Most of them are too fancy.
