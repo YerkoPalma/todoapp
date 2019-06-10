@@ -1,50 +1,41 @@
-const { addTodoItem, showTodo, hideTodo, toggleList } = require('./todo.js')
+const { TodoCollection } = require('./todoCollection.js')
 
 ;(() => {
+  const todoCollection = new TodoCollection()
+
   const form = document.querySelector('form')
   form.addEventListener('submit', e => {
     e.preventDefault()
-    // get todo name
     const todoName = document.querySelector('.todo-name').value
     document.querySelector('.todo-name').value = ''
-    const todoItem = addTodoItem(todoName)
-    document.querySelector('.todo-list').appendChild(todoItem)
+    todoCollection.add(todoName)
   })
 
   // panel switching
   document.querySelector('#all-todos').addEventListener('click', e => {
     e.preventDefault()
-    const todosList = toggleList(e)
-    for (let todoItem of todosList.children) {
-      showTodo(todoItem)
-    }
+    toggleList(e)
+    todoCollection.showAll()
   })
 
   document.querySelector('#pending-todos').addEventListener('click', e => {
     e.preventDefault()
-    const todosList = toggleList(e)
-    for (let todoItem of todosList.children) {
-      // if input is checked, todo is done
-      if (todoItem.querySelector('input:checked')) {
-        // must hide todo
-        hideTodo(todoItem)
-      } else {
-        showTodo(todoItem)
-      }
-    }
+    toggleList(e)
+    todoCollection.showPending()
   })
 
   document.querySelector('#done-todos').addEventListener('click', e => {
     e.preventDefault()
-    const todosList = toggleList(e)
-    for (let todoItem of todosList.children) {
-      // if input is checked, todo is done
-      if (!todoItem.querySelector('input:checked')) {
-        // must show todo
-        hideTodo(todoItem)
-      } else {
-        showTodo(todoItem)
-      }
-    }
+    toggleList(e)
+    todoCollection.showDone()
   })
+
+  function toggleList (e) {
+    // remove current active class
+    document.querySelector('.todo-panels > .active').classList.remove('active')
+    // add active class
+    e.target.classList.add('active')
+    // remove hidden classes
+    return document.querySelector('.todo-list.active')
+  }
 })()
