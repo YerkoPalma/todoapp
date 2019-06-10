@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "menubar todo app",
   "main": "index.js",
+  "author": "Yerko Palma <yerko.palma@usach.cl>",
   "scripts": {
     "build": "electron-builder",
     "start": "electron ."
