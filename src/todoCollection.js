@@ -133,7 +133,7 @@ class TodoItem {
 
   setText (e) {
     e.preventDefault()
-    this.update({ editable: !this.editable, text: document.querySelector(`#${this.id} input[type="text"]`).value })
+    this.update({ editable: !this.editable, text: document.querySelector(`#todo-${this.id} input[type="text"]`).value })
   }
 
   get data () {
