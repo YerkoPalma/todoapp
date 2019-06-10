@@ -5,7 +5,7 @@ const mb = menubar({
   browserWindow: {
     resizable: false
   },
-  icon: path.join(__dirname, 'assets', 'IconTemplate.png'),
+  icon: path.join(__dirname, 'assets', 'icon.png'),
   index: path.join(__dirname, 'src', 'index.html'),
   preloadWindow: true
 })
