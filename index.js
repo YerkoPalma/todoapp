@@ -3,7 +3,10 @@ const path = require('path')
 
 const mb = menubar({
   browserWindow: {
-    resizable: false
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   },
   icon: path.join(__dirname, 'assets', 'icon.png'),
   index: path.join(__dirname, 'src', 'index.html'),

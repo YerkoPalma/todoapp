@@ -4,6 +4,7 @@ const html = require('nanohtml')
 const morph = require('nanomorph')
 const nanologger = require('nanologger')
 const nanobus = require('nanobus')
+const dragula = require('dragula')
 const log = nanologger('TodoApp')
 const bus = nanobus()
 
@@ -34,6 +35,9 @@ exports.TodoCollection = class TodoCollection {
     bus.on('updateTodos', () => {
       this.updateTodos()
     })
+
+    // dragable todos
+    dragula([this.container], { revertOnSpill: true })
   }
 
   showDone () {
