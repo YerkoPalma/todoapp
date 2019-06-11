@@ -5,6 +5,10 @@ const morph = require('nanomorph')
 const nanologger = require('nanologger')
 const nanobus = require('nanobus')
 const dragula = require('dragula')
+const isDev = require('electron-is-dev')
+
+// in production, only log errors
+if (!isDev) window.localStorage.setItem('logLevel', 'error')
 const log = nanologger('TodoApp')
 const bus = nanobus()
 

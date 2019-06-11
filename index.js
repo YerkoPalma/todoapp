@@ -1,5 +1,6 @@
 const { menubar } = require('menubar')
 const path = require('path')
+const isDev = require('electron-is-dev')
 
 const mb = menubar({
   browserWindow: {
@@ -19,5 +20,5 @@ mb.on('ready', () => {
 
 mb.on('after-create-window', () => {
   console.log('window created.')
-  mb.window.openDevTools()
+  if (isDev) mb.window.openDevTools()
 })
