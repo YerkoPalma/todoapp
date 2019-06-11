@@ -20,10 +20,13 @@ exports.TodoCollection = class TodoCollection {
       const todos = JSON.parse(fs.readFileSync(this.file, 'utf8'))
       if (Array.isArray(todos)) {
         log.info(`Reading ${todos.length} todos`)
+        let position = 0
         for (let todo of todos) {
           let todoItem = new TodoItem(todo)
+          todoItem.position = position
           this.items.set(todoItem.id, todoItem)
           this.container.appendChild(todoItem.element)
+          position++
         }
       }
     } else {
@@ -37,7 +40,19 @@ exports.TodoCollection = class TodoCollection {
     })
 
     // dragable todos
-    dragula([this.container], { revertOnSpill: true })
+    const drake = dragula([this.container], { revertOnSpill: true })
+    drake.on('drop', (el, target, source, sibling) => {
+      log.info('Reordering todos')
+      let items = []
+      this.items.forEach(todoItem => {
+        todoItem.position = Array.from(this.container.children).indexOf(todoItem.element)
+        items.push(todoItem)
+      })
+      for (let item of items) {
+        this.items.set(item.id, item)
+      }
+      this.updateTodos()
+    })
   }
 
   showDone () {
@@ -61,6 +76,7 @@ exports.TodoCollection = class TodoCollection {
   add (todo) {
     log.info('Adding', todo)
     let todoItem = new TodoItem(todo)
+    todoItem.position = this.items.size
     this.items.set(todoItem.id, todoItem)
     this.container.appendChild(todoItem.element)
     this.updateTodos()
@@ -77,9 +93,12 @@ exports.TodoCollection = class TodoCollection {
     log.info('Updating todos')
     let todos = []
     this.items.forEach(todo => {
-      todos.push(todo.data)
+      todos.push(todo)
     })
-    fs.writeFileSync(this.file, JSON.stringify(todos, null, 2))
+    todos.sort((a, b) => {
+      return a.position - b.position
+    })
+    fs.writeFileSync(this.file, JSON.stringify(todos.map(todo => todo.data), null, 2))
   }
 }
 
@@ -94,6 +113,7 @@ class TodoItem {
       this.done = args.done || false
       this.id = args.id || Math.random().toString(36).slice(2)
     }
+    this.position = 0
     this.visible = true
     this.editable = false
     this.element = this.getTemplate()
