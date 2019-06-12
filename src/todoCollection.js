@@ -49,7 +49,7 @@ exports.TodoCollection = class TodoCollection {
     })
 
     // dragable todos
-    const drake = dragula([this.container], { revertOnSpill: true })
+    const drake = dragula([this.container], { removeOnSpill: true })
     drake.on('drop', (el, target, source, sibling) => {
       log.info('Reordering todos')
       let items = []
@@ -61,6 +61,12 @@ exports.TodoCollection = class TodoCollection {
         this.items.set(item.id, item)
       }
       this.updateTodos()
+    })
+
+    drake.on('remove', (el, container, source) => {
+      log.info('Removing by dropping')
+      const id = el.id.split('-').pop()
+      this.remove(id, false)
     })
   }
 
@@ -91,9 +97,9 @@ exports.TodoCollection = class TodoCollection {
     this.updateTodos()
   }
 
-  remove (id) {
+  remove (id, shouldRemoveDOM = true) {
     log.info('Removing', id)
-    document.getElementById(`todo-${id}`).remove()
+    if (shouldRemoveDOM) document.getElementById(`todo-${id}`).remove()
     this.items.delete(id)
     this.updateTodos()
   }
