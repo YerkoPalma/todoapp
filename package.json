@@ -8,14 +8,44 @@
     "build": "electron-builder",
     "start": "electron ."
   },
+  "build": {
+    "appId": "com.yerkopalma.Todoapp",
+    "mac": {
+      "darkModeSupport": true
+    },
+    "dmg": {
+      "iconSize": 160,
+      "contents": [
+        {
+          "x": 180,
+          "y": 170
+        },
+        {
+          "x": 480,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  },
   "devDependencies": {
-    "electron": "^5.0.1",
-    "electron-builder": "^20.39.0",
-    "electron-prebuilt": "^1.4.13"
+    "electron": "^5.0.4",
+    "electron-builder": "^20.39.0"
   },
   "dependencies": {
     "dragula": "^3.7.2",
+    "electron-debug": "^3.0.0",
     "electron-is-dev": "^1.1.0",
+    "electron-store": "^3.3.0",
+    "electron-unhandled": "^2.2.0",
+    "electron-util": "^0.12.1",
     "menubar": "^6.0.3",
     "nanobus": "^4.4.0",
     "nanohtml": "^1.6.3",
