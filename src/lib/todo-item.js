@@ -48,7 +48,9 @@ exports.TodoItem = class TodoItem {
   removeHandler (shouldRemove) {
     if (shouldRemove) {
       // remove!
-      window.bus.emit('removeTodo', this.id)
+      // window.bus.emit('removeTodo', this.id)
+      window.webkitRequestAnimationFrame.delet(this.id)
+      this.element.remove()
     }
   }
 
@@ -71,22 +73,25 @@ exports.TodoItem = class TodoItem {
     return {
       id: this.id,
       text: this.text,
-      done: this.done
+      done: this.done,
+      position: this.position
     }
   }
 
   update (values) {
     let changed = false
-    let shouldUpdate = false
+    // let shouldUpdate = false
     if (typeof values === 'object' && typeof values.text === 'string') {
       this.text = values.text
       changed = true
-      shouldUpdate = true
+      // shouldUpdate = true
+      window.items.set(this.id, this)
     }
     if (typeof values === 'object' && typeof values.done === 'boolean') {
       this.done = values.done
       changed = true
-      shouldUpdate = true
+      // shouldUpdate = true
+      window.items.set(this.id, this)
     }
     if (typeof values === 'object' && typeof values.editable === 'boolean') {
       this.editable = values.editable
@@ -98,7 +103,7 @@ exports.TodoItem = class TodoItem {
       changed = true
     }
 
-    if (shouldUpdate) window.bus.emit('updateTodos')
+    // if (shouldUpdate) window.bus.emit('updateTodos')
     if (changed) this.render()
     return this
   }
