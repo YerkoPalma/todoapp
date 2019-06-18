@@ -15,14 +15,10 @@ exports.TodoCollection = class TodoCollection {
     // dragable todos
     const drake = dragula([this.container], { removeOnSpill: true })
     drake.on('drop', (el, target, source, sibling) => {
-      let items = []
       window.items.forEach(todoItem => {
         todoItem.position = Array.from(this.container.children).indexOf(todoItem.element)
-        items.push(todoItem)
+        window.items.set(todoItem.id, todoItem)
       })
-      for (let item of items) {
-        window.items.set(item.id, item)
-      }
     })
 
     drake.on('remove', (el, container, source) => {
