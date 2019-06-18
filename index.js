@@ -3,38 +3,46 @@ const path = require('path')
 const unhandled = require('electron-unhandled')
 const debug = require('electron-debug')
 const { is } = require('electron-util')
+const { app, Tray } = require('electron')
+const menu = require('./menu.js')
 
 unhandled()
 debug()
 
-const mb = menubar({
-  browserWindow: {
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  },
-  tooltip: 'Simple todo manager',
-  icon: path.join(__dirname, 'assets', 'icon.png'),
-  index: path.join(__dirname, 'src', 'index.html'),
-  preloadWindow: true
-})
+let mb
+app.on('ready', () => {
+  const tray = new Tray(path.join(__dirname, 'assets', 'icon.png'))
+  tray.setContextMenu(menu)
 
-mb.app.setAppUserModelId('com.yerkopalma.Todoapp')
+  mb = menubar({
+    browserWindow: {
+      resizable: false,
+      webPreferences: {
+        nodeIntegration: true
+      }
+    },
+    tooltip: 'Simple todo manager',
+    tray,
+    index: path.join(__dirname, 'src', 'index.html'),
+    preloadWindow: true
+  })
 
-if (!mb.app.requestSingleInstanceLock()) {
-  mb.app.quit()
-}
+  mb.app.setAppUserModelId('com.yerkopalma.Todoapp')
 
-mb.app.on('window-all-closed', () => {
-  if (!is.macos) {
+  if (!mb.app.requestSingleInstanceLock()) {
     mb.app.quit()
   }
-})
 
-mb.on('after-create-window', () => {
-  console.log('process version', process.version)
-  console.log('v8', process.versions.v8)
-  console.log('node', process.versions.node)
-  console.log('electron', process.versions.electron)
+  mb.app.on('window-all-closed', () => {
+    if (!is.macos) {
+      mb.app.quit()
+    }
+  })
+
+  mb.on('after-create-window', () => {
+    console.log('process version', process.version)
+    console.log('v8', process.versions.v8)
+    console.log('node', process.versions.node)
+    console.log('electron', process.versions.electron)
+  })
 })
