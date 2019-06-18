@@ -48,7 +48,6 @@ exports.TodoItem = class TodoItem {
   removeHandler (shouldRemove) {
     if (shouldRemove) {
       // remove!
-      // window.bus.emit('removeTodo', this.id)
       window.webkitRequestAnimationFrame.delet(this.id)
       this.element.remove()
     }
@@ -103,7 +102,6 @@ exports.TodoItem = class TodoItem {
       changed = true
     }
 
-    // if (shouldUpdate) window.bus.emit('updateTodos')
     if (changed) this.render()
     return this
   }
