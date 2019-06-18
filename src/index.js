@@ -1,4 +1,4 @@
-const { TodoCollection } = require('./todoCollection.js')
+const { TodoCollection } = require('./lib/todo-collection.js')
 
 ;(() => {
   const todoCollection = new TodoCollection()
