@@ -1,3 +1,4 @@
+'use strict'
 const { menubar } = require('menubar')
 const path = require('path')
 const unhandled = require('electron-unhandled')
