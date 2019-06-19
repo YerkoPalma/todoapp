@@ -9,7 +9,7 @@ const menu = require('./menu.js')
 
 if (is.development) {
   require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+    electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron')
   })
 }
 
@@ -18,7 +18,7 @@ debug()
 
 let mb
 app.on('ready', () => {
-  const tray = new Tray(path.join(__dirname, 'assets', 'icon.png'))
+  const tray = new Tray(path.join(__dirname, '..', '..', 'assets', 'icon.png'))
   tray.setContextMenu(menu)
 
   mb = menubar({
@@ -30,7 +30,7 @@ app.on('ready', () => {
     },
     tooltip: 'Simple todo manager',
     tray,
-    index: path.join(__dirname, 'src', 'index.html'),
+    index: path.join(__dirname, '..', 'renderer', 'index.html'),
     preloadWindow: true
   })
 
