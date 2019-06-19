@@ -1,11 +1,10 @@
-'use strict'
-const { menubar } = require('menubar')
-const path = require('path')
-const unhandled = require('electron-unhandled')
-const debug = require('electron-debug')
-const { is } = require('electron-util')
-const { app, Tray } = require('electron')
-const menu = require('./menu.js')
+import { menubar, Menubar } from 'menubar'
+import * as path from 'path'
+import unhandled = require('electron-unhandled')
+import debug = require('electron-debug')
+import { is } from 'electron-util'
+import { app, Tray } from 'electron'
+import menu from './menu.js'
 
 if (is.development) {
   require('electron-reload')(__dirname, {
@@ -16,7 +15,7 @@ if (is.development) {
 unhandled()
 debug()
 
-let mb
+let mb: Menubar
 app.on('ready', () => {
   const tray = new Tray(path.join(__dirname, '..', '..', 'assets', 'icon.png'))
   tray.setContextMenu(menu)
