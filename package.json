@@ -37,7 +37,8 @@
   },
   "devDependencies": {
     "electron": "^5.0.4",
-    "electron-builder": "^20.39.0"
+    "electron-builder": "^20.39.0",
+    "electron-reload": "^1.4.0"
   },
   "dependencies": {
     "dragula": "^3.7.2",

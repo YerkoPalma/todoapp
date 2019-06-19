@@ -8,12 +8,14 @@ exports.TodoItem = class TodoItem {
       this.text = args
       this.done = false
       this.id = Math.random().toString(36).slice(2)
+      this.position = 0
     } else {
       this.text = args.text
       this.done = args.done || false
       this.id = args.id || Math.random().toString(36).slice(2)
+      this.position = args.position || 0
     }
-    this.position = 0
+
     this.visible = true
     this.editable = false
     this.element = this.getTemplate()
@@ -48,7 +50,7 @@ exports.TodoItem = class TodoItem {
   removeHandler (shouldRemove) {
     if (shouldRemove) {
       // remove!
-      window.webkitRequestAnimationFrame.delet(this.id)
+      window.items.delete(this.id)
       this.element.remove()
     }
   }
@@ -79,17 +81,14 @@ exports.TodoItem = class TodoItem {
 
   update (values) {
     let changed = false
-    // let shouldUpdate = false
     if (typeof values === 'object' && typeof values.text === 'string') {
       this.text = values.text
       changed = true
-      // shouldUpdate = true
       window.items.set(this.id, this)
     }
     if (typeof values === 'object' && typeof values.done === 'boolean') {
       this.done = values.done
       changed = true
-      // shouldUpdate = true
       window.items.set(this.id, this)
     }
     if (typeof values === 'object' && typeof values.editable === 'boolean') {

@@ -7,6 +7,12 @@ const { is } = require('electron-util')
 const { app, Tray } = require('electron')
 const menu = require('./menu.js')
 
+if (is.development) {
+  require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+  })
+}
+
 unhandled()
 debug()
 
@@ -41,7 +47,7 @@ app.on('ready', () => {
   })
 
   mb.on('after-create-window', () => {
-    console.log('process version', process.version)
+    console.log('\napp data', mb.app.getPath('userData'))
     console.log('v8', process.versions.v8)
     console.log('node', process.versions.node)
     console.log('electron', process.versions.electron)

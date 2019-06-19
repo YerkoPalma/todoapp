@@ -15,7 +15,7 @@ exports.TodoCollection = class TodoCollection {
     // dragable todos
     const drake = dragula([this.container], { removeOnSpill: true })
     drake.on('drop', (el, target, source, sibling) => {
-      window.items.forEach(todoItem => {
+      window.items.toArray().forEach(todoItem => {
         todoItem.position = Array.from(this.container.children).indexOf(todoItem.element)
         window.items.set(todoItem.id, todoItem)
       })
@@ -28,19 +28,19 @@ exports.TodoCollection = class TodoCollection {
   }
 
   showDone () {
-    window.items.forEach(todoItem => {
+    window.items.toArray().forEach(todoItem => {
       todoItem.update({ visible: todoItem.done })
     })
   }
 
   showAll () {
-    window.items.forEach(todoItem => {
+    window.items.toArray().forEach(todoItem => {
       todoItem.update({ visible: true })
     })
   }
 
   showPending () {
-    window.items.forEach(todoItem => {
+    window.items.toArray().forEach(todoItem => {
       todoItem.update({ visible: !todoItem.done })
     })
   }

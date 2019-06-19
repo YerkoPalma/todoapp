@@ -2,15 +2,23 @@ const Store = require('electron-store')
 const { TodoItem } = require('./todo-item.js')
 
 exports.TodoStore = class TodoStore extends Store {
+  constructor (opts) {
+    super(opts)
+    this._items = Object.create(null)
+    for (let [ key, value ] of this) {
+      this._items[key] = new TodoItem(value)
+    }
+  }
   forEach (handler) {
     if (typeof handler === 'function') {
-      for (let [ key, value ] of this) {
-        handler(value, key)
+      for (let [ key ] of this) {
+        handler(this.get(key), key)
       }
     }
   }
 
   set (key, value) {
+    this._items[key] = value
     if (value.data) {
       super.set(key, value.data)
     } else {
@@ -19,7 +27,12 @@ exports.TodoStore = class TodoStore extends Store {
   }
 
   get (key, defaultValue) {
-    return new TodoItem(super.get(key))
+    return this._items[key]
+  }
+
+  delete (key) {
+    super.delete(key)
+    delete this._items[key]
   }
 
   toArray () {
