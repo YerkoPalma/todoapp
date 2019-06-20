@@ -18,7 +18,7 @@
     "build": "tsc && npm run copy",
     "pack": "npm run build && electron-builder",
     "dist": "npm run build && electron-builder --macos --linux --windows",
-    "test": "standard *.ts",
+    "test": "standard *.ts && depcheck --skip-missing=true --ignores=@types/*,@typescript-eslint/*",
     "start": "npm run build && electron ./build/main",
     "copy": "cp src/renderer/*.css src/renderer/*.html build/renderer/"
   },
@@ -67,6 +67,7 @@
     "@types/dragula": "^2.1.34",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
+    "depcheck": "^0.8.1",
     "electron": "^5.0.4",
     "electron-builder": "^20.39.0",
     "electron-reload": "^1.4.0",
@@ -81,7 +82,6 @@
     "electron-util": "^0.12.1",
     "menubar": "^6.0.3",
     "nanohtml": "^1.6.3",
-    "nanologger": "^1.3.1",
     "nanomorph": "^5.4.0"
   }
 }
