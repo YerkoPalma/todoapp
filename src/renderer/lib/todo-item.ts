@@ -1,9 +1,36 @@
-const html = require('nanohtml')
+import html = require('nanohtml')
 const morph = require('nanomorph')
-const { prompt } = require('./prompt.js')
+import { prompt } from './prompt'
+import { TodoStore } from './todo-store'
 
-exports.TodoItem = class TodoItem {
-  constructor (args) {
+export interface TodoItemOptions {
+  text: string;
+  done: boolean;
+  id: string;
+  position: number;
+}
+
+export interface TodoItemData {
+  text: string;
+  done: boolean;
+  id: string;
+  position: number;
+}
+
+declare global {
+  interface Window { items: TodoStore; }
+}
+
+export class TodoItem {
+  text: string;
+  done: boolean;
+  id: string;
+  position: number;
+  visible: boolean;
+  editable: boolean;
+  element: HTMLElement;
+
+  constructor (args: TodoItemOptions | string) {
     if (typeof args === 'string') {
       this.text = args
       this.done = false
@@ -21,8 +48,8 @@ exports.TodoItem = class TodoItem {
     this.element = this.getTemplate()
   }
 
-  getTemplate () {
-    return html`
+  getTemplate (): HTMLElement {
+    return html.default`
     <li class="todo-item ${this.visible ? 'shown' : 'hidden'}" id="todo-${this.id}">
       <input id="inputtodo-${this.id}" type="checkbox" onchange=${this.toggleDone.bind(this)} ${this.done ? 'checked' : ''}/>
       <label for="inputtodo-${this.id}"></label>
@@ -36,7 +63,7 @@ exports.TodoItem = class TodoItem {
           <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
         </svg>
       </a>
-      <a href="#" class="cta remove" onclick=${e => prompt('Are you sure?', this.removeHandler.bind(this))}>
+      <a href="#" class="cta remove" onclick=${(e: EventTarget) => prompt('Are you sure?', this.removeHandler.bind(this))}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="3 6 5 6 21 6" />
           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -47,7 +74,7 @@ exports.TodoItem = class TodoItem {
     </li>`
   }
 
-  removeHandler (shouldRemove) {
+  removeHandler (shouldRemove: boolean): void {
     if (shouldRemove) {
       // remove!
       window.items.delete(this.id)
@@ -55,22 +82,22 @@ exports.TodoItem = class TodoItem {
     }
   }
 
-  toggleEdit (e) {
+  toggleEdit (e: MouseEvent) {
     e.preventDefault()
     this.update({ editable: !this.editable })
   }
 
-  toggleDone (e) {
+  toggleDone (e: MouseEvent): void {
     e.preventDefault()
     this.update({ done: !this.done })
   }
 
-  setText (e) {
+  setText (e: MouseEvent): void {
     e.preventDefault()
-    this.update({ editable: !this.editable, text: document.querySelector(`#todo-${this.id} input[type="text"]`).value })
+    this.update({ editable: !this.editable, text: (document.querySelector(`#todo-${this.id} input[type="text"]`) as HTMLInputElement).value })
   }
 
-  get data () {
+  get data (): TodoItemData {
     return {
       id: this.id,
       text: this.text,
@@ -79,7 +106,7 @@ exports.TodoItem = class TodoItem {
     }
   }
 
-  update (values) {
+  update (values: any): TodoItem {
     let changed = false
     if (typeof values === 'object' && typeof values.text === 'string') {
       this.text = values.text
@@ -105,7 +132,7 @@ exports.TodoItem = class TodoItem {
     return this
   }
 
-  render () {
+  render (): void {
     this.element = morph(this.element, this.getTemplate())
   }
 }

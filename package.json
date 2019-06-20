@@ -2,15 +2,23 @@
   "name": "todoapp",
   "version": "1.2.0",
   "description": "menubar todo app",
-  "main": "src/main/index.js",
+  "main": "build/main/index.js",
   "author": "Yerko Palma <yerko.palma@usach.cl>",
   "scripts": {
-    "build": "tsc",
-    "pack": "electron-builder",
+    "build": "tsc && npm run copy",
+    "pack": "npm run build && electron-builder",
     "test": "standard *.ts",
-    "start": "npm run build && electron ./build"
+    "start": "npm run build && electron ./build/main",
+    "copy": "cp src/renderer/*.css src/renderer/*.html build/renderer/"
   },
   "build": {
+    "extends": null,
+    "files": [
+      "./build/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
     "appId": "com.yerkopalma.Todoapp",
     "mac": {
       "darkModeSupport": true
@@ -44,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/dragula": "^2.1.34",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
     "electron": "^5.0.4",

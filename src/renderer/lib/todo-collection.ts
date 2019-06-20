@@ -1,12 +1,18 @@
-'use strict'
-const dragula = require('dragula')
-const { TodoItem } = require('./todo-item.js')
-const { TodoStore } = require('./todo-store.js')
+import * as dragula from 'dragula'
+import { TodoItem, TodoItemOptions } from './todo-item'
+import { TodoStore } from './todo-store'
 
 window.items = new TodoStore({ name: 'default' })
 
-exports.TodoCollection = class TodoCollection {
-  constructor (opts = {}) {
+interface TodoCollectionOptions {
+  list?: string;
+  name?: string;
+}
+
+export class TodoCollection {
+  container: HTMLElement;
+
+  constructor (opts: TodoCollectionOptions | undefined = {}) {
     opts.list = opts.list || '.todo-list'
     opts.name = opts.name || 'todo'
     this.container = document.querySelector(opts.list)
@@ -14,45 +20,45 @@ exports.TodoCollection = class TodoCollection {
 
     // dragable todos
     const drake = dragula([this.container], { removeOnSpill: true })
-    drake.on('drop', (el, target, source, sibling) => {
+    drake.on('drop', (el: any, target: any, source: any, sibling: any) => {
       window.items.toArray().forEach(todoItem => {
         todoItem.position = Array.from(this.container.children).indexOf(todoItem.element)
         window.items.set(todoItem.id, todoItem)
       })
     })
 
-    drake.on('remove', (el, container, source) => {
+    drake.on('remove', (el: HTMLElement, container: any, source: any) => {
       const id = el.id.split('-').pop()
       this.remove(id, false)
     })
   }
 
-  showDone () {
+  showDone (): void {
     window.items.toArray().forEach(todoItem => {
       todoItem.update({ visible: todoItem.done })
     })
   }
 
-  showAll () {
+  showAll (): void {
     window.items.toArray().forEach(todoItem => {
       todoItem.update({ visible: true })
     })
   }
 
-  showPending () {
+  showPending (): void {
     window.items.toArray().forEach(todoItem => {
       todoItem.update({ visible: !todoItem.done })
     })
   }
 
-  add (todo) {
+  add (todo: TodoItemOptions): void {
     let todoItem = new TodoItem(todo)
     todoItem.position = window.items.size
     window.items.set(todoItem.id, todoItem)
     this.container.appendChild(todoItem.element)
   }
 
-  remove (id, shouldRemoveDOM = true) {
+  remove (id: string, shouldRemoveDOM: boolean = true): void {
     if (shouldRemoveDOM) document.getElementById(`todo-${id}`).remove()
     window.items.delete(id)
   }

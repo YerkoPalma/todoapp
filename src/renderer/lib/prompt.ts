@@ -1,14 +1,14 @@
-const html = require('nanohtml')
+import html = require('nanohtml')
 
-exports.prompt = function (text, cb) {
+export function prompt(text: string, cb: Function) {
   // prompt template
-  const promptElement = html`
+  const promptElement = html.default`
   <div class="prompt-container">
     <div class="prompt">
       <span>${text}</span>
       <div class="promt-buttons">
-        <button onclick=${e => dismiss(true)} class="ok">Ok</button>
-        <button onclick=${e => dismiss(false)} class="cancel">Cancel</button>
+        <button onclick=${(e: EventTarget) => dismiss(true)} class="ok">Ok</button>
+        <button onclick=${(e: EventTarget) => dismiss(false)} class="cancel">Cancel</button>
       </div>
     </div>
   </div>`
@@ -18,7 +18,7 @@ exports.prompt = function (text, cb) {
   document.body.appendChild(promptElement)
 
   // prepare listeners
-  promptElement.addEventListener('animationend', e => {
+  promptElement.addEventListener('animationend', (e: AnimationEvent) => {
     if (e.animationName === 'fadeout') {
       promptElement.remove()
     }
@@ -30,7 +30,7 @@ exports.prompt = function (text, cb) {
     })
   }, 0)
 
-  function dismiss (ok) {
+  function dismiss (ok: boolean) {
     setTimeout(() => {
       window.requestAnimationFrame(() => {
         promptElement.classList.add('hide')

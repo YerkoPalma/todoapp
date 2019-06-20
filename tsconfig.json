@@ -2,6 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
+    "target": "es6",
+    "downlevelIteration": true,
     "rootDir": "./src",
     "outDir": "build",
     "sourceMap": true,
