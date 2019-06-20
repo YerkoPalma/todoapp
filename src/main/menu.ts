@@ -41,7 +41,7 @@ if (!is.macos) {
       type: 'separator'
     },
     aboutMenuItem({
-      icon: path.join(__dirname, 'assets', 'icon.png'),
+      icon: path.join(__dirname, '..', '..', 'assets', 'icon.png'),
       text: 'Created by Your Yerko Palma'
     })
   )
