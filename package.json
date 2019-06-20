@@ -5,8 +5,10 @@
   "main": "build/main/index.js",
   "author": "Yerko Palma <yerko.palma@usach.cl>",
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
     "build": "tsc && npm run copy",
     "pack": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --macos --linux --windows",
     "test": "standard *.ts",
     "start": "npm run build && electron ./build/main",
     "copy": "cp src/renderer/*.css src/renderer/*.html build/renderer/"
