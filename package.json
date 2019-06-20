@@ -2,8 +2,17 @@
   "name": "todoapp",
   "version": "1.3.1",
   "description": "menubar todo app",
+  "homepage": "https://github.com/YerkoPalma/todoapp",
+  "repository": {
+    "url": "https://github.com/YerkoPalma/todoapp"
+  },
   "main": "build/main/index.js",
-  "author": "Yerko Palma <yerko.palma@usach.cl>",
+  "license": "MIT",
+  "author": {
+    "name": "Yerko Palma",
+    "email": "yerko.palma@usach.cl",
+    "url": "https://yerkopalma.me"
+  },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "build": "tsc && npm run copy",
