@@ -1,14 +1,13 @@
-'use strict'
-const path = require('path')
-const { app, Menu, shell } = require('electron')
-const {
+import * as path from 'path'
+import { app, Menu, shell } from 'electron'
+import {
   is,
   aboutMenuItem,
   openUrlMenuItem,
   openNewGitHubIssue,
   debugInfo
-} = require('electron-util')
-const config = require('./config')
+} from 'electron-util'
+import config from './config'
 
 const helpSubmenu = [
   openUrlMenuItem({
@@ -42,13 +41,13 @@ if (!is.macos) {
       type: 'separator'
     },
     aboutMenuItem({
-      icon: path.join(__dirname, 'assets', 'icon.png'),
+      icon: path.join(__dirname, '..', '..', 'assets', 'icon.png'),
       text: 'Created by Your Yerko Palma'
     })
   )
 }
 
-const debugSubmenu = [
+const debugSubmenu: Electron.MenuItemConstructorOptions[] = [
   {
     label: 'Show Settings',
     click () {
@@ -92,4 +91,4 @@ if (is.development) {
   })
 }
 
-module.exports = Menu.buildFromTemplate(template)
+export default Menu.buildFromTemplate(template)

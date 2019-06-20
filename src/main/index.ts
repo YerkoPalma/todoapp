@@ -1,24 +1,23 @@
-'use strict'
-const { menubar } = require('menubar')
-const path = require('path')
-const unhandled = require('electron-unhandled')
-const debug = require('electron-debug')
-const { is } = require('electron-util')
-const { app, Tray } = require('electron')
-const menu = require('./menu.js')
+import { menubar, Menubar } from 'menubar'
+import * as path from 'path'
+import unhandled = require('electron-unhandled')
+import debug = require('electron-debug')
+import { is } from 'electron-util'
+import { app, Tray } from 'electron'
+import menu from './menu.js'
 
 if (is.development) {
   require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+    electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron')
   })
 }
 
 unhandled()
 debug()
 
-let mb
+let mb: Menubar
 app.on('ready', () => {
-  const tray = new Tray(path.join(__dirname, 'assets', 'icon.png'))
+  const tray = new Tray(path.join(__dirname, '..', '..', 'assets', 'icon.png'))
   tray.setContextMenu(menu)
 
   mb = menubar({
@@ -30,7 +29,7 @@ app.on('ready', () => {
     },
     tooltip: 'Simple todo manager',
     tray,
-    index: path.join(__dirname, 'src', 'index.html'),
+    index: path.join(__dirname, '..', 'renderer', 'index.html'),
     preloadWindow: true
   })
 
