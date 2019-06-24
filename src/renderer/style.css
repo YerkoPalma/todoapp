@@ -35,6 +35,9 @@ form {
 .todo-list {
   list-style: none;
   padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin-bottom: 2.5rem;
 }
 
 .todo-item {
@@ -42,7 +45,7 @@ form {
   padding: .5rem;
   border-top: solid 1px #EBEBEB;
   border-bottom: solid 1px #EBEBEB;
-  width: 370px;
+  /* width: 370px; */
   margin: 0 auto;
   align-content: space-around;
   position: relative;
@@ -99,8 +102,9 @@ form {
   padding: .5rem;
   width: 370px;
   margin: 0 auto;
-  position: absolute;
-  bottom: 1rem;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
 }
 .todo-panels > a {
   text-decoration: none;
