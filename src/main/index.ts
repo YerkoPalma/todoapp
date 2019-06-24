@@ -13,7 +13,9 @@ if (is.development) {
 }
 
 unhandled()
-debug()
+debug({
+  showDevTools: false
+})
 
 let mb: Menubar
 app.on('ready', () => {
