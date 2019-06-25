@@ -27,7 +27,8 @@ app.on('ready', () => {
       resizable: false,
       webPreferences: {
         nodeIntegration: true
-      }
+      },
+      alwaysOnTop: is.development
     },
     tooltip: 'Simple todo manager',
     tray,
