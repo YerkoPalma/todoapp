@@ -1,0 +1,30 @@
+form {
+  display: flex;
+  align-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.new-todo {
+  border-radius: 100%;
+  outline: none;
+  border: none;
+  padding: 1rem;
+  font-size: 1.25rem;
+  line-height: .75rem;
+  background-color: #C8F1A4;
+  color: #ABABAB;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.new-todo:hover {
+  background-color: #6EDF28;
+  color: #5C5C5C;
+}
+.todo-name {
+  border-style: dashed;
+  border-color: #ABABAB;
+  padding: .5rem;
+  font-size: 1.25rem;
+  line-height: .75rem;
+}
