@@ -4,6 +4,11 @@
 @import './styles/todo-panels.css';
 @import './styles/prompt.css';
 
+body {
+  background: rgba(0, 0, 0, .4);
+  margin: 0;
+}
+
 .todo-list {
   list-style: none;
   padding: 0;
@@ -13,12 +18,51 @@
 }
 
 .control-bar {
-  position: relative;
-  height: 30px;
+  background: #fff;
+  padding: .5rem;
+  position: fixed;
+  width: 96%;
+  top: 0;
+  left: 0;
 }
 .control-bar > a {
   color: #333;
   float: right;
   position: absolute;
-  right: 0;
+  right: .5rem;
+}
+
+.todo-container {
+  background: #fff;
+  padding: .5rem;
+  padding-top: 2.5rem;
+}
+.todo-container .todo-list-title {
+  font-family: Helvetica;
+  margin-top: 0;
+}
+
+.todo-container.preview {
+  animation-duration: .3s;
+  animation-name: shrink;
+}
+.todo-container.avatar {
+  transform: scale(.5);
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(.5);
+  }
+}
+@keyframes grow {
+  from {
+    transform: scale(.5);
+  }
+  to {
+    transform: scale(1);
+  }
 }

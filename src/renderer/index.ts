@@ -1,4 +1,4 @@
-const { TodoCollection } = require('./lib/todo-collection.js')
+const { TodoCollection } = require('./lib/todo-collection')
 
 ;(() => {
   const todoCollection = new TodoCollection()
@@ -9,6 +9,19 @@ const { TodoCollection } = require('./lib/todo-collection.js')
     const todoName = (document.querySelector('.todo-name') as HTMLInputElement).value;
     (document.querySelector('.todo-name') as HTMLInputElement).value = ''
     todoCollection.add(todoName)
+  })
+
+  // list switching
+  document.querySelector('.switch-list').addEventListener('click', (e: MouseEvent) => {
+    const containers = Array.from(document.querySelectorAll('.todo-container'))
+    for (let container of containers) {
+      container.addEventListener('animationend', (e: AnimationEvent) => {
+        if (e.animationName === 'shrink') {
+          container.classList.add('avatar')
+        }
+      })
+      container.classList.add('preview')
+    }
   })
 
   // panel switching

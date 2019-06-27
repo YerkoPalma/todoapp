@@ -51,7 +51,7 @@ export class TodoCollection {
     })
   }
 
-  add (todo: TodoItemOptions): void {
+  add (todo: string | TodoItemOptions): void {
     let todoItem = new TodoItem(todo)
     todoItem.position = window.items.size
     window.items.set(todoItem.id, todoItem)
