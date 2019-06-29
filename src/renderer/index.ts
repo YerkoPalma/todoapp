@@ -12,15 +12,11 @@ const { TodoCollection } = require('./lib/todo-collection')
   })
 
   // list switching
+  const containers = Array.from(document.querySelectorAll('.todo-container'))
   document.querySelector('.switch-list').addEventListener('click', (e: MouseEvent) => {
-    const containers = Array.from(document.querySelectorAll('.todo-container'))
+    e.preventDefault()
     for (let container of containers) {
-      container.addEventListener('animationend', (e: AnimationEvent) => {
-        if (e.animationName === 'shrink') {
-          container.classList.add('avatar')
-        }
-      })
-      container.classList.add('preview')
+      container.classList.toggle('avatar')
     }
   })
 

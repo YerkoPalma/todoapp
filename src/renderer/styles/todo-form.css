@@ -4,6 +4,7 @@ form {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  transition: all .3s;
 }
 .new-todo {
   border-radius: 100%;

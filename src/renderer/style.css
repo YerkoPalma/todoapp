@@ -20,6 +20,7 @@ body {
 .control-bar {
   background: #fff;
   padding: .5rem;
+  min-height: 24px;
   position: fixed;
   width: 96%;
   top: 0;
@@ -36,18 +37,37 @@ body {
   background: #fff;
   padding: .5rem;
   padding-top: 2.5rem;
+  transition: all .3s;
 }
 .todo-container .todo-list-title {
   font-family: Helvetica;
   margin-top: 0;
+  transition: all .3s;
 }
 
 .todo-container.preview {
   animation-duration: .3s;
   animation-name: shrink;
 }
+.todo-container.restore {
+  animation-duration: .3s;
+  animation-name: grow;
+}
 .todo-container.avatar {
   transform: scale(.5);
+}
+
+.todo-container.avatar .todo-list-title,
+.todo-container.preview .todo-list-title {
+  margin-left: 2rem;
+  font-size: 3rem;
+}
+
+.todo-container.avatar form,
+.todo-container.avatar .todo-panels,
+.todo-container.preview form,
+.todo-container.preview .todo-panels {
+  display: none;
 }
 
 @keyframes shrink {
@@ -58,6 +78,7 @@ body {
     transform: scale(.5);
   }
 }
+
 @keyframes grow {
   from {
     transform: scale(.5);
