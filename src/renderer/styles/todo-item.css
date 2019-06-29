@@ -70,7 +70,7 @@
   bottom: 0;
   background: #fff;
 }
-.todo-item:hover > .todo-controls {
+.todo-container:not(.avatar) .todo-item:hover > .todo-controls {
   display: block;
 }
 .edit {
