@@ -38,12 +38,18 @@ body {
   padding: .5rem;
   padding-top: 2.5rem;
   transition: all .3s;
+  min-height: 88%;
 }
 .todo-container .todo-list-title {
   font-family: Helvetica;
   margin-top: 0;
   transition: all .3s;
 }
+
+.todo-container:not(.avatar) .todo-list-title {
+  display: none;
+}
+
 
 .todo-container.preview {
   animation-duration: .3s;
@@ -55,6 +61,12 @@ body {
 }
 .todo-container.avatar {
   transform: scale(.5);
+  user-select: none;
+  pointer-events: none;
+}
+.current-list {
+  font-family: Helvetica;
+  font-weight: bold;
 }
 
 .todo-container.avatar .todo-list-title,
