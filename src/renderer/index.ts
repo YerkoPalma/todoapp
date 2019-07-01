@@ -7,6 +7,28 @@ const html = require('nanohtml')
 
   document.querySelector('form').addEventListener('submit', addTodo)
 
+  // list rendering
+  for (let list in window.lists.store) {
+    // if the container doesn't exists
+    if (!document.getElementById(list)) {
+      const listContainer = html`<div class="todo-container ${window.lists.get(list).active ? 'active' : ''}" id="${list}">
+          <h1 class="todo-list-title" data-title="${list}">${list}</h1>
+          <form onsubmit=${addTodo}>
+            <input class="todo-name" type="text"/>
+            <button class="new-todo">+</button>
+          </form>
+          <ul class="todo-list ${window.lists.get(list).active ? 'active' : ''}">
+          </ul>
+          <div class="todo-panels">
+            <a href="#" id="all-todos" class="active">All</a>
+            <a href="#" id="pending-todos">Pending</a>
+            <a href="#" id="done-todos">Done</a>
+          </div>
+        </div>`
+          document.body.appendChild(listContainer)
+    }
+  }
+
   // list switching
   document.querySelector('.switch-list').addEventListener('click', (e: MouseEvent) => {
     e.preventDefault()
@@ -27,12 +49,9 @@ const html = require('nanohtml')
         document.querySelector('.todo-list.active').classList.remove('active')
         document.querySelector('.todo-container.active').classList.remove('active')
         // check if the list already exists
-        let listContainer = document.querySelector(`#${listName}`)
-        if (listContainer) {
-          // the container already exists
-        } else {
+        if (!document.querySelector(`#${listName}`)) {
           // we must create the container
-          listContainer = html`<div class="todo-container active" id="${listName}">
+          const listContainer = html`<div class="todo-container active" id="${listName}">
           <h1 class="todo-list-title" data-title="${listName}">${listName}</h1>
           <form onsubmit=${addTodo}>
             <input class="todo-name" type="text"/>

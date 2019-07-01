@@ -1,4 +1,5 @@
 import html = require('nanohtml')
+import Store = require('electron-store')
 const morph = require('nanomorph')
 import { prompt } from './prompt'
 import { TodoStore } from './todo-store'
@@ -18,7 +19,10 @@ export interface TodoItemData {
 }
 
 declare global {
-  interface Window { items: TodoStore; }
+  interface Window { 
+    items?: TodoStore;
+    lists?: Store<any>;
+  }
 }
 
 export class TodoItem {
