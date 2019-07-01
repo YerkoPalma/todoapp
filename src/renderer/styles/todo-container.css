@@ -1,0 +1,67 @@
+.todo-container {
+  background: #fff;
+  padding: .5rem;
+  padding-top: 2.5rem;
+  transition: all .3s;
+  min-height: 88%;
+  display: none;
+}
+.todo-container.active,
+.todo-container.avatar {
+  display: block;
+}
+.todo-container .todo-list-title {
+  font-family: Helvetica;
+  margin-top: 0;
+  transition: all .3s;
+}
+
+.todo-container:not(.avatar) .todo-list-title {
+  display: none;
+}
+
+.todo-container.preview {
+  animation-duration: .3s;
+  animation-name: shrink;
+}
+.todo-container.restore {
+  animation-duration: .3s;
+  animation-name: grow;
+}
+.todo-container.avatar {
+  transform: scale(.5);
+  user-select: none;
+  pointer-events: none;
+}
+
+
+.todo-container.avatar .todo-list-title,
+.todo-container.preview .todo-list-title {
+  margin-left: 2rem;
+  font-size: 3rem;
+}
+
+.todo-container.avatar form,
+.todo-container.avatar .todo-panels,
+.todo-container.preview form,
+.todo-container.preview .todo-panels {
+  display: none;
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(.5);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}

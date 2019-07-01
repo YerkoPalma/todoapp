@@ -2,8 +2,6 @@ import * as dragula from 'dragula'
 import { TodoItem, TodoItemOptions } from './todo-item'
 import { TodoStore } from './todo-store'
 
-window.items = new TodoStore({ name: 'default' })
-
 interface TodoCollectionOptions {
   list?: string;
   name?: string;
@@ -13,8 +11,9 @@ export class TodoCollection {
   container: HTMLElement;
 
   constructor (opts: TodoCollectionOptions | undefined = {}) {
-    opts.list = opts.list || '.todo-list'
-    opts.name = opts.name || 'todo'
+    opts.list = opts.list || '.todo-list.active'
+    opts.name = opts.name || 'default'
+    window.items = new TodoStore({ name: opts.name })
     this.container = document.querySelector(opts.list)
     window.items.toArray().forEach(todoItem => this.container.appendChild(todoItem.element))
 

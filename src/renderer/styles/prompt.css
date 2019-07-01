@@ -38,6 +38,14 @@
   margin-bottom: 1rem;
 }
 
+.prompt > input[type="text"] {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: .5rem;
+  border-radius: 3px;
+  border: solid 1px #ccc;
+}
 .promt-buttons {
   display: block;
   align-content: space-around;
