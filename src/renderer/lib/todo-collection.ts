@@ -26,7 +26,7 @@ export class TodoCollection {
     window.lists.set(currentLists)
     window.lists.set(opts.name, { active: true })
     this.container = document.querySelector(opts.list)
-    window.items.toArray().forEach(todoItem => this.container.appendChild(todoItem.element))
+    if (this.container.children.length === 0) window.items.toArray().forEach(todoItem => this.container.appendChild(todoItem.element))
 
     // dragable todos
     const drake = dragula([this.container], { removeOnSpill: true })

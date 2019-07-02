@@ -6,12 +6,14 @@ const html = require('nanohtml')
   let todoCollection = new TodoCollection()
 
   document.querySelector('form').addEventListener('submit', addTodo)
+  document.querySelector('.todo-selector').addEventListener('click', selectTodo)
 
   // list rendering
   for (let list in window.lists.store) {
     // if the container doesn't exists
     if (!document.getElementById(list)) {
       const listContainer = html`<div class="todo-container ${window.lists.get(list).active ? 'active' : ''}" id="${list}">
+          <a onclick=${selectTodo} class="todo-selector"></a>
           <h1 class="todo-list-title" data-title="${list}">${list}</h1>
           <form onsubmit=${addTodo}>
             <input class="todo-name" type="text"/>
@@ -25,7 +27,7 @@ const html = require('nanohtml')
             <a href="#" id="done-todos">Done</a>
           </div>
         </div>`
-          document.body.appendChild(listContainer)
+      document.body.appendChild(listContainer)
     }
   }
 
@@ -52,6 +54,7 @@ const html = require('nanohtml')
         if (!document.querySelector(`#${listName}`)) {
           // we must create the container
           const listContainer = html`<div class="todo-container active" id="${listName}">
+          <a onclick=${selectTodo} class="todo-selector"></a>
           <h1 class="todo-list-title" data-title="${listName}">${listName}</h1>
           <form onsubmit=${addTodo}>
             <input class="todo-name" type="text"/>
@@ -105,5 +108,27 @@ const html = require('nanohtml')
     const todoName = (document.querySelector('.todo-container.active .todo-name') as HTMLInputElement).value;
     (document.querySelector('.todo-container.active .todo-name') as HTMLInputElement).value = ''
     todoCollection.add(todoName)
+  }
+
+  function selectTodo (e: MouseEvent) {
+    e.preventDefault()
+    const selectedContainer = (e.target as Node).parentNode
+    // deselect all containers
+    document.querySelector('.todo-container.active').classList.remove('active')
+    document.querySelector('.todo-list.active').classList.remove('active')
+
+    // select current
+    ;(selectedContainer as Element).classList.add('active')
+    ;(selectedContainer as Element).querySelector('.todo-list').classList.add('active')
+
+    // change avatar view
+    Array.from(document.querySelectorAll('.todo-container.avatar')).forEach(container => {
+      container.classList.remove('avatar')
+    })
+
+    // update title
+    const newListTitle = (selectedContainer.querySelector('.todo-list-title') as HTMLElement).dataset.title
+    document.querySelector('.current-list').textContent = newListTitle
+    todoCollection = new TodoCollection({ name: newListTitle })
   }
 })()

@@ -20,6 +20,15 @@
   display: none;
 }
 
+.todo-container.avatar .todo-selector {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 999;
+}
 .todo-container.preview {
   animation-duration: .3s;
   animation-name: shrink;
@@ -30,8 +39,6 @@
 }
 .todo-container.avatar {
   transform: scale(.5);
-  user-select: none;
-  pointer-events: none;
 }
 
 
