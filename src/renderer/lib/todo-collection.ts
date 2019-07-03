@@ -1,8 +1,7 @@
 import * as dragula from 'dragula'
 import { TodoItem, TodoItemOptions } from './todo-item'
 import { TodoStore } from './todo-store'
-
-window.items = new TodoStore({ name: 'default' })
+import Store = require('electron-store')
 
 interface TodoCollectionOptions {
   list?: string;
@@ -13,10 +12,21 @@ export class TodoCollection {
   container: HTMLElement;
 
   constructor (opts: TodoCollectionOptions | undefined = {}) {
-    opts.list = opts.list || '.todo-list'
-    opts.name = opts.name || 'todo'
+    opts.list = opts.list || '.todo-list.active'
+    opts.name = opts.name || 'default'
+    window.items = new TodoStore({ name: opts.name })
+    if (!window.lists) {
+      window.lists = new Store({ name: 'todo-lists' })
+    }
+    // change every list to unactive
+    const currentLists = window.lists.store
+    for (let list in currentLists) {
+      currentLists[list] = { active: false }
+    }
+    window.lists.set(currentLists)
+    window.lists.set(opts.name, { active: true })
     this.container = document.querySelector(opts.list)
-    window.items.toArray().forEach(todoItem => this.container.appendChild(todoItem.element))
+    if (this.container.children.length === 0) window.items.toArray().forEach(todoItem => this.container.appendChild(todoItem.element))
 
     // dragable todos
     const drake = dragula([this.container], { removeOnSpill: true })
@@ -51,7 +61,7 @@ export class TodoCollection {
     })
   }
 
-  add (todo: TodoItemOptions): void {
+  add (todo: string | TodoItemOptions): void {
     let todoItem = new TodoItem(todo)
     todoItem.position = window.items.size
     window.items.set(todoItem.id, todoItem)

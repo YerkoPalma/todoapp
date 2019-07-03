@@ -1,0 +1,24 @@
+.todo-panels {
+  text-align: center;
+  font-family: Helvetica;
+  padding: .5rem;
+  width: 93%;
+  margin: 0 auto;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  transition: all .3s;
+}
+.todo-panels > a {
+  text-decoration: none;
+  color: #ABABAB;
+  font-weight: bold;
+  padding-right: 1rem;
+}
+.todo-panels > a.active {
+  color: #5C5C5C;
+}
+.todo-panels > a:not(:first-child) {
+  padding-left: 1rem;
+  border-left: solid 2px #98E85A;
+}

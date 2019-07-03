@@ -18,10 +18,10 @@
     "build": "tsc && npm run copy",
     "pack": "npm run build && electron-builder",
     "dist": "npm run build && electron-builder --macos --linux --windows",
-    "test": "standard *.ts && depcheck --skip-missing=true --ignores=@types/*,@typescript-eslint/* && npm run test:integration",
+    "test": "standard *.ts && depcheck --skip-missing=true --ignores=standard,@types/*,@typescript-eslint/* && npm run test:integration",
     "test:integration": "npm run build && ts-node ./test",
     "start": "npm run build && electron ./build/main",
-    "copy": "cp src/renderer/*.css src/renderer/*.html build/renderer/"
+    "copy": "cp src/renderer/*.css src/renderer/*.html build/renderer/ && mkdir -p build/renderer/styles && cp src/renderer/styles/*.css build/renderer/styles/"
   },
   "build": {
     "extends": null,

@@ -1,0 +1,24 @@
+.control-bar {
+  background: #fff;
+  padding: .5rem;
+  min-height: 24px;
+  position: fixed;
+  width: 96%;
+  top: 0;
+  left: 0;
+}
+.control-bar > a {
+  color: #333;
+  float: right;
+  position: absolute;
+  right: .5rem;
+}
+
+.control-bar .add-list {
+  margin-right: 25px;
+}
+
+.current-list {
+  font-family: Helvetica;
+  font-weight: bold;
+}
