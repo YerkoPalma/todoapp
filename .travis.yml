@@ -9,11 +9,9 @@ matrix:
 node_js: '12'
 
 addons:
-  chrome: stable
   apt:
     packages:
       - xvfb
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run test; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run dist; fi
