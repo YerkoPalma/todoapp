@@ -5,11 +5,21 @@ import debug = require('electron-debug')
 import { is } from 'electron-util'
 import { app, Tray } from 'electron'
 import menu from './menu.js'
+import AutoLaunch = require('auto-launch')
 
 if (is.development) {
   require('electron-reload')(__dirname, {
     electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron')
   })
+} else {
+  // auto launch for production build
+  const appLauncher = new AutoLaunch({
+    name: 'todoapp'
+  })
+  appLauncher.isEnabled()
+    .then(enabled => {
+      if (!enabled) appLauncher.enable()
+    })
 }
 
 unhandled()
