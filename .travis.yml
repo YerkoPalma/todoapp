@@ -15,5 +15,5 @@ addons:
       - xvfb
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run npm test; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run -a npm test; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run dist; fi
